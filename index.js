@@ -6,19 +6,22 @@ const app = express();
 
 // Directorio público
 // hacer que cuando la persona entre al slash mostrarle el directorio publico
-// el use en express es un middleware, es decir una función que se ejecuta siempre que pase por algún lugar
+// el use en express es un middleware, es decir una función que se ejecuta
+// siempre que pase por algún lugar
 app.use(express.static("public"));
 
+// Lectura y parseo del body
+app.use(express.json());
+
 //Rutas
-// aquí le digo al cliente cuando alguien
-//solicite un slash que es lo que quiero responder
-/*app.get("/", (req, res) => {
-  //para retornar un objeto json
-  res.json({
-    ok: true,
-  });
-});
-*/
+// aquí especificamos la ruta en la cual quiero que esté habilitado
+//este endpoint a traves de un middleware
+//(la ruta en la que quiero que esté habilitado este endpoint,
+//de lo que tenemos en out )
+// es decir que cuando vayan a postman y escriban
+//localhost:4001/api/auth se va a buscar el endpoint en routes auth
+app.use("/api/auth", require("./routes/auth"));
+
 // Escuchar ,(le voy a decir a mi servidor de express
 // donde escuchar las peticiones) (puerto donde va a correr,
 //un callback que se ejecuta cuando el servidor este arriba )
