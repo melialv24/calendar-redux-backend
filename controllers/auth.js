@@ -1,8 +1,40 @@
 const { response } = require("express");
+<<<<<<< HEAD
 const bcrypt = require("bcryptjs");
 const { validationResult } = require("express-validator");
 const Usuario = require("../models/Usuario");
 const crearUsuario = async (req, res = response) => {
+=======
+const Usuario = require("../models/Usuario");
+const { validationResult } = require("express-validator");
+const crearUsuario = async (req, res = response) => {
+  const { name, email, password } = req.body;
+
+  const usuario = new Usuario(req.body);
+  await usuario.save();
+
+  //para retornar un objeto json
+
+  //manejo de errores
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({
+      ok: false,
+      errors: errors.mapped(),
+    });
+  }
+
+  res.status(201).json({
+    ok: true,
+    msg: "register",
+    name,
+    email,
+    password,
+  });
+};
+
+const loginUsuario = (req, res = response) => {
+>>>>>>> 25edf5e0421b39b8fa217b125b2f3eb29777a50d
   const { email, password } = req.body;
 
   try {

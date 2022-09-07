@@ -15,6 +15,10 @@
     "dotenv": "^16.0.2",
     "express": "^4.18.1",
     "express-validator": "^6.14.2",
+<<<<<<< HEAD
     "mongoose": "^6.5.4"
+=======
+    "moongose": "^1.0.0"
+>>>>>>> 25edf5e0421b39b8fa217b125b2f3eb29777a50d
   }
 }
