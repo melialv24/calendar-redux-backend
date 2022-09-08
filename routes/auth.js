@@ -1,6 +1,7 @@
 const { Router } = require("express");
 // el check se encarga de validar un campo en particular a la vez
 const { check } = require("express-validator");
+const { validarJWT } = require("../middlewares/validar-jwt.js");
 const router = Router();
 const {
   crearUsuario,
@@ -41,6 +42,6 @@ router.post(
   loginUsuario
 );
 
-router.get("/renew", revalidarToken);
+router.get("/renew", validarJWT, revalidarToken);
 
 module.exports = router;

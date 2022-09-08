@@ -75,6 +75,7 @@ const loginUsuario = async (req, res = response) => {
       msg: "login",
       email,
       password,
+      token,
     });
   } catch (error) {
     console.log(error);
@@ -85,11 +86,18 @@ const loginUsuario = async (req, res = response) => {
   }
 };
 
-const revalidarToken = (req, res = response) => {
+const revalidarToken = async (req, res = response) => {
+  const { uid, name } = req;
+
+  // Generar un nuevo JWT y retornarlo e esta petición
+  const token = await generarJWT(uid, name);
+
   //para retornar un objeto json
   res.json({
     ok: true,
-    msg: "renew",
+    uid,
+    name,
+    token,
   });
 };
 
