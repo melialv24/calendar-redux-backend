@@ -1,38 +1,53 @@
+/*
+    Event Routes
+    /api/events
+*/
+const { Router } = require("express");
+const { check } = require("express-validator");
+
+const { isDate } = require("../helpers/isDate");
+const { validarCampos } = require("../middlewares/validar-campos");
+const { validarJWT } = require("../middlewares/validar-jwt");
 const {
-  getEvents,
+  getEventos,
   crearEvento,
   actualizarEvento,
   eliminarEvento,
 } = require("../controllers/events");
-const { check } = require("express-validator");
-const { isDate } = require("../helpers/isDate");
 
-const { validarJWT } = require("../middlewares/validar-jwt");
-const { validarCampos } = require("../middlewares/validar-campos");
-const router = require("./auth");
+const router = Router();
 
+// Todas tienes que pasar por la validación del JWT
 router.use(validarJWT);
 
-// Todas tienen que pasar por la validación del JWT
 // Obtener eventos
-router.get("/getEvents", getEvents);
+router.get("/", getEventos);
 
-//Crear n nuevo evento
+// Crear un nuevo evento
 router.post(
-  "/newEvent",
+  "/",
   [
     check("title", "El titulo es obligatorio").not().isEmpty(),
     check("start", "Fecha de inicio es obligatoria").custom(isDate),
-    //check("title", "Fecha de fin es obligatoria").custom(isDate),
+    check("end", "Fecha de finalización es obligatoria").custom(isDate),
     validarCampos,
   ],
   crearEvento
 );
 
-//Actualizar evento
-router.put("/updateEvent/:id", actualizarEvento);
+// Actualizar Evento
+router.put(
+  "/:id",
+  [
+    check("title", "El titulo es obligatorio").not().isEmpty(),
+    check("start", "Fecha de inicio es obligatoria").custom(isDate),
+    check("end", "Fecha de finalización es obligatoria").custom(isDate),
+    validarCampos,
+  ],
+  actualizarEvento
+);
 
-//Eliminar evento
-router.delete("/deleteEvent/:id", eliminarEvento);
+// Borrar evento
+router.delete("/:id", eliminarEvento);
 
 module.exports = router;

@@ -1,7 +1,9 @@
 const moment = require("moment");
 
-const isDate = (value, { req, location, path }) => {
-  if (!value) return false;
+const isDate = (value) => {
+  if (!value) {
+    return false;
+  }
 
   const fecha = moment(value);
   if (fecha.isValid()) {
